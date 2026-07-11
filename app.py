@@ -1,15 +1,12 @@
-from dotenv import load_dotenv
-import os
+from agents.planner import create_plan
 
-from langchain_google_genai import ChatGoogleGenerativeAI
+print("=" * 50)
+print(" AI Agent Coordination Engine ")
+print("=" * 50)
 
-load_dotenv()
+task = input("\nEnter your task: ")
 
-llm = ChatGoogleGenerativeAI(
-    model="gemini-3.5-flash",
-    google_api_key=os.getenv("GOOGLE_API_KEY")
-)
+plan = create_plan(task)
 
-response = llm.invoke("Hello! Introduce yourself in one sentence.")
-
-print(response.content[0]["text"])
+print("\nGenerated Plan:\n")
+print(plan)
