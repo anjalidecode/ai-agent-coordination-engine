@@ -4,6 +4,9 @@ from agents.planner import create_plan
 from agents.researcher import research_plan
 from agents.decision import make_decision
 
+from workflows.tool_selector import select_tool
+from workflows.tool_executor import execute_tool
+
 st.set_page_config(
     page_title="AI Agent Coordination Engine",
     page_icon="🤖",
@@ -27,20 +30,35 @@ if st.button("Generate"):
         st.warning("Please enter a task.")
         st.stop()
 
-    with st.spinner("Planner Agent Working..."):
-        plan = create_plan(task)
+    # Check whether a tool should handle the request
+    tool = select_tool(task)
 
-    st.subheader("📋 Planner Agent")
-    st.write(plan)
+    if tool:
 
-    with st.spinner("Research Agent Working..."):
-        research = research_plan(plan)
+        st.success(f"Tool Selected: {tool}")
 
-    st.subheader("🔍 Research Agent")
-    st.write(research)
+        with st.spinner(f"Executing {tool}..."):
+            result = execute_tool(tool, task)
 
-    with st.spinner("Decision Agent Working..."):
-        decision = make_decision(research)
+        st.subheader("🛠 Tool Output")
+        st.write(result)
 
-    st.subheader("✅ Decision Agent")
-    st.write(decision)
+    else:
+
+        with st.spinner("Planner Agent Working..."):
+            plan = create_plan(task)
+
+        st.subheader("📋 Planner Agent")
+        st.write(plan)
+
+        with st.spinner("Research Agent Working..."):
+            research = research_plan(plan)
+
+        st.subheader("🔍 Research Agent")
+        st.write(research)
+
+        with st.spinner("Decision Agent Working..."):
+            decision = make_decision(task, research)
+
+        st.subheader("✅ Decision Agent")
+        st.write(decision)

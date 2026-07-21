@@ -1,18 +1,26 @@
 from config import llm
 from prompts.decision_prompt import DECISION_PROMPT
 
+from workflows.tool_selector import select_tool
+from workflows.tool_executor import execute_tool
 
-def make_decision(research: str) -> str:
+
+def make_decision(task: str, research: str):
     """
-    Analyze the research report and provide
-    the best technical recommendation.
+    Make a decision based on research.
+    If a suitable tool exists, execute it.
+    Otherwise, use the LLM.
     """
 
-    prompt = DECISION_PROMPT.format(research=research)
+    tool_name = select_tool(task)
+
+    if tool_name:
+        return execute_tool(tool_name, task)
+
+    prompt = DECISION_PROMPT.format(
+        research=research
+    )
 
     response = llm.invoke(prompt)
-
-    if isinstance(response.content, list):
-        return response.content[0]["text"]
 
     return response.content
