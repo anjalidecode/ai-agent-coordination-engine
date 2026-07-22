@@ -1,11 +1,6 @@
 import streamlit as st
 
-from agents.planner import create_plan
-from agents.researcher import research_plan
-from agents.decision import make_decision
-
-from workflows.tool_selector import select_tool
-from workflows.tool_executor import execute_tool
+from workflows.main_workflow import run_workflow
 
 st.set_page_config(
     page_title="AI Agent Coordination Engine",
@@ -30,35 +25,24 @@ if st.button("Generate"):
         st.warning("Please enter a task.")
         st.stop()
 
-    # Check whether a tool should handle the request
-    tool = select_tool(task)
+    with st.spinner("Executing Workflow..."):
 
-    if tool:
+        result = run_workflow(task)
 
-        st.success(f"Tool Selected: {tool}")
+    if result["type"] == "tool":
 
-        with st.spinner(f"Executing {tool}..."):
-            result = execute_tool(tool, task)
+        st.success(f"Tool Selected: {result['tool']}")
 
         st.subheader("🛠 Tool Output")
-        st.write(result)
+        st.write(result["result"])
 
     else:
 
-        with st.spinner("Planner Agent Working..."):
-            plan = create_plan(task)
-
         st.subheader("📋 Planner Agent")
-        st.write(plan)
-
-        with st.spinner("Research Agent Working..."):
-            research = research_plan(plan)
+        st.write(result["plan"])
 
         st.subheader("🔍 Research Agent")
-        st.write(research)
-
-        with st.spinner("Decision Agent Working..."):
-            decision = make_decision(task, research)
+        st.write(result["research"])
 
         st.subheader("✅ Decision Agent")
-        st.write(decision)
+        st.write(result["decision"])

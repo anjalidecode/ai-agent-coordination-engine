@@ -1,34 +1,31 @@
-from agents.planner import create_plan
-from agents.researcher import research_plan
-from agents.decision import make_decision
-from workflows.tool_selector import select_tool
-from workflows.tool_executor import execute_tool
+from workflows.main_workflow import run_workflow
 
 print("=" * 60)
-print("      AI Agent Coordination Engine")
+print("        AI Agent Coordination Engine")
 print("=" * 60)
 
 task = input("Enter your task: ")
 
-# Check if a tool should handle the task
-tool = select_tool(task)
+result = run_workflow(task)
 
-if tool:
-    print("\nTool Selected:", tool)
-    result = execute_tool(tool, task)
-    print(result)
+if result["type"] == "tool":
+
+    print(f"\nTool Selected: {result['tool']}")
+    print(f"\nResult:\n{result['result']}")
 
 else:
-    print("\nPlanner Agent Working...\n")
-    plan = create_plan(task)
-    print(plan)
 
     print("\n" + "=" * 60)
-    print("Research Agent Working...\n")
-    research = research_plan(plan)
-    print(research)
+    print("Planner Agent")
+    print("=" * 60)
+    print(result["plan"])
 
     print("\n" + "=" * 60)
-    print("Decision Agent Working...\n")
-    decision = make_decision(task, research)
-    print(decision)
+    print("Research Agent")
+    print("=" * 60)
+    print(result["research"])
+
+    print("\n" + "=" * 60)
+    print("Decision Agent")
+    print("=" * 60)
+    print(result["decision"])

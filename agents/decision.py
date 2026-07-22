@@ -23,4 +23,9 @@ def make_decision(task: str, research: str):
 
     response = llm.invoke(prompt)
 
+
+    if isinstance(response.content, list):
+     return response.content[0]["text"]
+
     return response.content
+
