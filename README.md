@@ -1,46 +1,66 @@
 # 🤖 AI Agent Coordination & Decision Engine
 
-A multi-agent AI application developed using **Python**, **LangChain**, and **Google Gemini** as part of the **Infosys Springboard Virtual Internship**.
+A multi-agent AI application developed using **Python**, **LangChain**, and **Google Gemini**.
 
-This project demonstrates how multiple AI agents collaborate to solve a user's task by intelligently deciding whether the request should be handled by AI agents or specialized tools. The system supports AI-powered planning and reasoning along with custom tools such as a Calculator and a Weather service.
-
----
-
-# 📌 Milestone 1
-
-## Objectives Completed
-
-- Configure LangChain and required dependencies
-- Develop foundational AI agents
-- Implement prompt templates
-- Create agent interaction workflow
-- Build a basic testing interface using Streamlit
+This project demonstrates how multiple AI agents collaborate to solve complex tasks by intelligently coordinating specialized agents and custom enterprise tools. The system combines AI-powered reasoning with intelligent tool routing, enabling efficient workflow automation and decision support.
 
 ---
 
-# 📌 Milestone 2
+# 📌 Project Overview
 
-## Objectives Completed
+Modern enterprise workflows often require multiple AI agents working together while interacting with external tools and APIs. This project implements an AI Agent Coordination & Decision Engine capable of:
 
-- Developed intelligent Tool Selection mechanism
-- Implemented Tool Registry for scalable tool management
-- Built Tool Executor for dynamic tool execution
-- Added Calculator Tool
-- Integrated Weather Tool using Open-Meteo API
-- Combined AI Agents and Tool Routing into a unified workflow
-- Created modular testing framework
-- Improved application architecture for future scalability
+- Coordinating multiple AI agents
+- Selecting and executing appropriate tools
+- Integrating with external APIs
+- Supporting intelligent decision-making
+- Providing modular and scalable workflow architecture
 
 ---
 
-# 🏗️ Project Architecture
+# 📌 Milestone 1 (Weeks 1–2)
+
+## Objective
+
+Establish the core AI agent framework and development environment.
+
+### Completed Tasks
+
+- Configured LangChain and required dependencies
+- Developed foundational AI agents
+- Implemented prompt templates
+- Created agent interaction workflows
+- Built a basic Streamlit testing interface
+
+---
+
+# 📌 Milestone 2 (Weeks 3–4)
+
+## Objective
+
+Enable AI agents to interact with enterprise tools and external APIs through intelligent tool selection and coordinated action execution.
+
+### Completed Tasks
+
+- Developed custom enterprise tools
+- Integrated external REST APIs
+- Implemented Tool Registry
+- Built intelligent Tool Selector
+- Developed Tool Executor
+- Added exception handling
+- Validated tool execution accuracy
+- Created unit tests for workflow components
+
+---
+
+# 🏗️ System Architecture
 
 ```
                            User
                              │
                 ┌────────────┴────────────┐
                 │                         │
-         Tool Selector              AI Agent Workflow
+         Intelligent Tool Selector    AI Agent Workflow
                 │                         │
       ┌─────────┴──────────┐              │
       │                    │              │
@@ -58,29 +78,32 @@ Calculator Tool      Weather Tool     Planner Agent
 
 # 🤖 AI Agents
 
-## 1. Planner Agent
+## Planner Agent
 
-- Breaks user requirements into logical steps.
-- Creates a structured implementation plan.
-
-## 2. Research Agent
-
-- Analyzes the generated plan.
-- Suggests suitable technologies, frameworks, APIs, and best practices.
-
-## 3. Decision Agent
-
-- Reviews research findings.
-- Produces the final recommendation and implementation strategy.
+- Breaks complex user requests into structured implementation plans.
+- Organizes tasks into logical execution steps.
 
 ---
 
-# 🛠️ Custom Tools
+## Research Agent
+
+- Analyses the generated plan.
+- Suggests suitable technologies, APIs, frameworks, and best practices.
+
+---
+
+## Decision Agent
+
+- Evaluates research findings.
+- Produces the final recommendation with reasoning and implementation guidance.
+
+---
+
+# 🛠️ Enterprise Tools
 
 ## Calculator Tool
 
-- Evaluates mathematical expressions.
-- Provides instant computation without invoking the LLM.
+A custom enterprise tool that performs mathematical computations without invoking the LLM.
 
 ### Example
 
@@ -96,11 +119,16 @@ Output
 
 ---
 
-## Weather Tool
+## Weather Information Tool
 
-- Retrieves live weather information.
-- Uses the Open-Meteo REST API.
-- Demonstrates integration with external APIs.
+An external API-integrated tool that retrieves real-time weather information using the **Open-Meteo REST API**.
+
+### Features
+
+- Live weather information
+- REST API integration
+- Enterprise-style API connector
+- Real-time temperature and wind speed
 
 ### Example
 
@@ -111,49 +139,54 @@ Weather in Bangalore
 Output
 
 ```
-Temperature: 26.3°C
-Wind Speed: 11.5 km/h
+Temperature: 26.4°C
+Wind Speed: 12.5 km/h
 ```
 
 ---
 
 # ⚙️ Intelligent Workflow
 
-The application first determines whether the request requires a tool or AI reasoning.
+The application first determines whether the request requires an AI workflow or a specialized tool.
 
-### Tool Workflow
+## Tool Execution Workflow
 
 ```
-User
-   │
-   ▼
+User Request
+      │
+      ▼
 Tool Selector
-   │
-   ▼
+      │
+      ▼
+Tool Registry
+      │
+      ▼
 Tool Executor
-   │
-   ▼
+      │
+      ▼
 Calculator / Weather Tool
-   │
-   ▼
-Result
+      │
+      ▼
+Final Response
 ```
 
-### AI Workflow
+---
+
+## AI Agent Workflow
 
 ```
-User
-   │
-   ▼
+User Request
+      │
+      ▼
 Planner Agent
-   │
-   ▼
+      │
+      ▼
 Research Agent
-   │
-   ▼
+      │
+      ▼
 Decision Agent
-   │
-   ▼
+      │
+      ▼
 Final Recommendation
 ```
 
@@ -189,9 +222,9 @@ agent-engine/
 │
 ├── workflows/
 │   ├── main_workflow.py
+│   ├── tool_registry.py
 │   ├── tool_selector.py
-│   ├── tool_executor.py
-│   └── tool_registry.py
+│   └── tool_executor.py
 │
 ├── app.py
 ├── ui.py
@@ -204,11 +237,29 @@ agent-engine/
 
 ---
 
+# ✨ Features
+
+- Multi-Agent Collaboration
+- Planner Agent
+- Research Agent
+- Decision Agent
+- Intelligent Tool Selection
+- Enterprise Tool Registry
+- Tool Executor
+- Calculator Tool
+- Weather API Integration
+- Streamlit Web Interface
+- Command-Line Interface
+- Modular Architecture
+- Unit Testing
+
+---
+
 # 🛠️ Technologies Used
 
 - Python 3.12
 - LangChain
-- Google Gemini API
+- Google Gemini
 - Streamlit
 - Requests
 - Open-Meteo API
@@ -226,25 +277,31 @@ git clone https://github.com/<your-username>/ai-agent-coordination-engine.git
 cd ai-agent-coordination-engine
 ```
 
-## Create a Virtual Environment
+---
+
+## Create Virtual Environment
 
 ```bash
 python3 -m venv .venv
 ```
 
-## Activate the Virtual Environment
+---
 
-Linux/macOS
+## Activate Environment
+
+### Linux/macOS
 
 ```bash
 source .venv/bin/activate
 ```
 
-Windows
+### Windows
 
 ```bash
 .venv\Scripts\activate
 ```
+
+---
 
 ## Install Dependencies
 
@@ -264,15 +321,17 @@ GOOGLE_API_KEY=YOUR_API_KEY
 
 ---
 
-# ▶️ Run the Project
+# ▶️ Run the Application
 
-## Terminal Interface
+## Terminal
 
 ```bash
 python app.py
 ```
 
-## Streamlit Interface
+---
+
+## Streamlit
 
 ```bash
 streamlit run ui.py
@@ -282,19 +341,23 @@ streamlit run ui.py
 
 # 🧪 Sample Inputs
 
-### AI Task
+## AI Agent Task
 
 ```
 Build a Hospital Management System
 ```
 
-### Calculator
+---
+
+## Calculator Tool
 
 ```
 25 * 67
 ```
 
-### Weather
+---
+
+## Weather Tool
 
 ```
 Weather in Bangalore
@@ -304,19 +367,29 @@ Weather in Bangalore
 
 # ✅ Testing
 
-The project includes dedicated unit tests for major components.
+Execute the following tests from the project root.
 
-```
+```bash
 python -m tests.test_calculator
+```
 
+```bash
 python -m tests.test_weather
+```
 
+```bash
 python -m tests.test_selector
+```
 
-python -m tests.test_executor
-
+```bash
 python -m tests.test_registry
+```
 
+```bash
+python -m tests.test_executor
+```
+
+```bash
 python -m tests.test_workflow
 ```
 
@@ -325,13 +398,16 @@ python -m tests.test_workflow
 # 🚀 Future Enhancements
 
 - Multi-Agent Coordinator
-- Memory Integration
+- Shared Memory Integration
+- Long-Term Memory
 - Vector Database Support
+- FastAPI REST APIs
+- Enterprise Database Integration
 - Additional Enterprise Tools
-- FastAPI REST Services
-- Docker Deployment
+- Workflow Automation Engine
 - Authentication & User Management
 - Multi-LLM Support
+- Docker Deployment
 
 ---
 
@@ -341,4 +417,4 @@ python -m tests.test_workflow
 
 Bachelor of Engineering (Computer Science & Engineering)
 
-Infosys Springboard Virtual Internship Project
+Developed as part of the **Infosys Springboard Virtual Internship**.
